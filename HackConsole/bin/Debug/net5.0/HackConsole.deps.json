@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "HackConsole/1.0.0": {
+        "dependencies": {
+          "ParserLibrary": "1.0.0"
+        },
+        "runtime": {
+          "HackConsole.dll": {}
+        }
+      },
+      "ParserLibrary/1.0.0": {
+        "runtime": {
+          "ParserLibrary.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HackConsole/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ParserLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

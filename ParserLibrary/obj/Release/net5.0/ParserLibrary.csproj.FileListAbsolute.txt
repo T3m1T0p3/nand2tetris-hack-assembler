@@ -1,0 +1,12 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\bin\Release\net5.0\ParserLibrary.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\bin\Release\net5.0\ParserLibrary.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\bin\Release\net5.0\ref\ParserLibrary.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\bin\Release\net5.0\ParserLibrary.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ParserLibrary.csproj.AssemblyReference.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ParserLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ParserLibrary.AssemblyInfoInputs.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ParserLibrary.AssemblyInfo.cs
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ParserLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ParserLibrary.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ref\ParserLibrary.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Release\net5.0\ParserLibrary.pdb

@@ -1,0 +1,19 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\HackAssembler Console.exe
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\HackAssembler Console.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\HackAssembler Console.runtimeconfig.json
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\HackAssembler Console.runtimeconfig.dev.json
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\HackAssembler Console.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\ref\HackAssembler Console.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\HackAssembler Console.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\ParserLibrary.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\bin\Debug\net5.0\ParserLibrary.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.csproj.AssemblyReference.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.AssemblyInfoInputs.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.AssemblyInfo.cs
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.csproj.CoreCompileInputs.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\ref\HackAssembler Console.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.genruntimeconfig.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler Console\obj\Debug\net5.0\HackAssembler Console.csproj.CopyComplete

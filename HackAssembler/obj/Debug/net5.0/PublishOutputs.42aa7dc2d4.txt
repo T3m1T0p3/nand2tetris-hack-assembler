@@ -1,0 +1,7 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Release\net5.0\publish\HackAssembler.exe
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Release\net5.0\publish\HackAssembler.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Release\net5.0\publish\HackAssembler.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Release\net5.0\publish\HackAssembler.runtimeconfig.json
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Release\net5.0\publish\HackAssembler.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Release\net5.0\publish\ParserLibrary.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Release\net5.0\publish\ParserLibrary.pdb
