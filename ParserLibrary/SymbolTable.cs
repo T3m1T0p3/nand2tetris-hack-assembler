@@ -14,8 +14,8 @@ namespace ParserLibrary
         public Dictionary<string, string> JumpTable { get; set; } = new Dictionary<string, string>();
 
         public Dictionary<string, int> Symbols { get; set; } = new Dictionary<string, int>();
-
-        private readonly int _nextAvalableAddress=16;
+        public int[] Addresses = new int[2];
+        private int _nextAvalableAddress=16;
         public SymbolTable()
         {
             ComputeTable.Add("0", "0101010");
@@ -67,7 +67,31 @@ namespace ParserLibrary
             JumpTable.Add("JMP", "111");
             JumpTable.Add("JLE", "110");
 
-            LabelTable= new Dictionary<string, int>();
+            Symbols.Add("SCREEN", 16384);
+            Symbols.Add("KBD", 24570);
+            Symbols.Add("SP", 0);
+            Symbols.Add("LCL", 1);
+            Symbols.Add("THIS", 3);
+            Symbols.Add("THAT", 4);
+            Symbols.Add("ARG", 2);
+            /*
+            Symbols.Add("R1", 1);
+            Symbols.Add("R2", 2);
+            Symbols.Add("R3", 3);
+            Symbols.Add("4", 4);
+            Symbols.Add("R5", 5);
+            Symbols.Add("R6", 6);
+            Symbols.Add("R7", 7);
+            Symbols.Add("R8", 8);
+            Symbols.Add("R9", 9);
+            Symbols.Add("R10", 10);
+            Symbols.Add("R11", 11);
+            Symbols.Add("R12", 12);
+            Symbols.Add("R13", 13);
+            Symbols.Add("14", 14);
+            Symbols.Add("R15", 15);*/
+
+            LabelTable = new Dictionary<string, int>();
 
             for (int i = 0; i < 16; i++)
             {
@@ -75,17 +99,40 @@ namespace ParserLibrary
             }
         }
 
+        public void ParseLabel(string label, int nextLine)
+        {
+             Symbols.TryAdd(label, nextLine);
+        }
+        public void ParseSymbol(string symbol,int lineCount)
+        {
+            bool isAddress = int.TryParse(symbol, out int Addr);
+            if (!isAddress&&!Symbols.ContainsKey(symbol))
+            {
+                Console.WriteLine($"{symbol}:{ _nextAvalableAddress}");
+                Symbols.TryAdd(symbol, _nextAvalableAddress++);
+            }
+            
+        }
+
         public void UpdateLableTable(string label,int lineNumber)
         {
             LabelTable.TryAdd(label, lineNumber + 1);
         }
-        public string MemoryAddress(string address)
+        public string GetMemoryAddress(string address)
         {
-            int.TryParse(address, out int bin);
+            string res;
+            var isAddress = int.TryParse(address, out int addr);
+            if(isAddress)
+            {
+                 res = Convert.ToString(addr,2);
+                res= res.PadLeft(16, '0');
+                return res;
+            }
+            var symbolAddress= Symbols[address];
+            var bin = Convert.ToString(symbolAddress, 2);
+            bin = bin.PadLeft(16, '0');
+            return bin;
 
-            var res=Convert.ToString(bin, 2);
-            res=res.PadLeft(16,'0');
-            return res;
         }
 
         public string GetCompCode(string ins)
