@@ -12,8 +12,8 @@ namespace HackAssembler
             string filePath = args[0];
             string assembly = filePath.Replace(".asm", ".hack");
             Parser parser = new Parser();
-            using var writer = new StreamWriter(assembly);//(@"C:\Users\Oyinlola\Desktop\nand2tetris\nand2tetris\nand2tetris\projects\06\pong\PongL.hack", false);
-            using (StreamReader reader = new StreamReader(filePath))//(@"C:\Users\Oyinlola\Desktop\nand2tetris\nand2tetris\nand2tetris\projects\06\pong\PongL.asm"))
+            using var writer = new StreamWriter(assembly);
+            using (StreamReader reader = new StreamReader(filePath))
             {
                 SymbolTable symbolTable = new ParserLibrary.SymbolTable();
                 string line;

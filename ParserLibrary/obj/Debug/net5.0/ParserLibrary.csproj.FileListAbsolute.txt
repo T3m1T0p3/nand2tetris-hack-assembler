@@ -9,4 +9,3 @@ C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Debug\net5.0\Pars
 C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Debug\net5.0\ParserLibrary.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Debug\net5.0\ref\ParserLibrary.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Debug\net5.0\ParserLibrary.pdb
-C:\Users\Oyinlola\source\repos\HackAssembler\ParserLibrary\obj\Debug\net5.0\ParserLibrary.csproj.AssemblyReference.cache

@@ -1,4 +1,7 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.exe
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.runtimeconfig.json
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.runtimeconfig.dev.json
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\ref\HackAssembler.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.pdb
@@ -9,10 +12,8 @@ C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\Hack
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\HackAssembler.AssemblyInfoInputs.cache
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\HackAssembler.AssemblyInfo.cs
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\HackAssembler.csproj.CoreCompileInputs.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\HackAssembler.csproj.CopyComplete
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\HackAssembler.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\ref\HackAssembler.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\HackAssembler.pdb
-C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.exe
-C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.runtimeconfig.json
-C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\bin\Debug\net5.0\HackAssembler.runtimeconfig.dev.json
 C:\Users\Oyinlola\source\repos\HackAssembler\HackAssembler\obj\Debug\net5.0\HackAssembler.genruntimeconfig.cache

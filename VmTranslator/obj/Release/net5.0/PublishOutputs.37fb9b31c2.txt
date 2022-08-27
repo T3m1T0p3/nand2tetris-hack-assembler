@@ -1,0 +1,5 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Release\net5.0\publish\VmTranslator.exe
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Release\net5.0\publish\VmTranslator.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Release\net5.0\publish\VmTranslator.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Release\net5.0\publish\VmTranslator.runtimeconfig.json
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Release\net5.0\publish\VmTranslator.pdb
