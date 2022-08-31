@@ -1,8 +1,10 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Debug\net5.0\VmTranslator.exe
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Debug\net5.0\VmTranslator.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Debug\net5.0\VmTranslator.runtimeconfig.json
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Debug\net5.0\VmTranslator.runtimeconfig.dev.json
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Debug\net5.0\VmTranslator.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Debug\net5.0\ref\VmTranslator.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\bin\Debug\net5.0\VmTranslator.pdb
-C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.csproj.AssemblyReference.cache
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.AssemblyInfoInputs.cache
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.AssemblyInfo.cs
@@ -10,3 +12,5 @@ C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTra
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\ref\VmTranslator.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.genruntimeconfig.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\VmTranslator\obj\Debug\net5.0\VmTranslator.csproj.AssemblyReference.cache

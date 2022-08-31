@@ -9,17 +9,19 @@ namespace VmTranslator
 {
     public class VmCodeParser
     {
-        private readonly string _filePath;
+        public string sourceFile;
         private string _curentLine;
         StreamReader _reader;
         Dictionary<string, string> commandTypes = new Dictionary<string, string>();
         public int lineCount = 0;
-        public VmCodeParser(string filePath)
+
+        public void SetFileName(string file)
         {
-            _filePath = filePath;
-
-            _reader = new StreamReader(filePath);
-
+            sourceFile = file;
+            _reader = new StreamReader(sourceFile);
+        }
+        public VmCodeParser()
+        {
             commandTypes.Add("push", "C_PUSH");
             commandTypes.Add("pop", "C_POP");
             commandTypes.Add("add", "C_ARITHMETIC");
@@ -31,7 +33,12 @@ namespace VmTranslator
             commandTypes.Add("and", "C_ARITHMETIC");
             commandTypes.Add("or", "C_ARITHMETIC");
             commandTypes.Add("not", "C_ARITHMETIC");
-
+            commandTypes.Add("label", "LABEL");
+            commandTypes.Add("if-goto", "IF-GOTO");
+            commandTypes.Add("goto", "GOTO");
+            commandTypes.Add("function", "FUNC_DEFINITION");
+            commandTypes.Add("call", "FUNC_CALL");
+            commandTypes.Add("return", "RETURN");
             Console.WriteLine("Parser initialized");
 
         }
@@ -43,7 +50,6 @@ namespace VmTranslator
 
         public bool HasMoreCommand()
         {
-            Console.WriteLine(_reader.EndOfStream);
             return _reader.EndOfStream;
         }
 
@@ -51,8 +57,8 @@ namespace VmTranslator
         {
             _curentLine = _reader.ReadLine();
             if (String.IsNullOrEmpty(_curentLine)||_curentLine.StartsWith('/')) Advance();
-            Console.WriteLine(_curentLine);
             _curentLine =_curentLine.TrimStart(' ').TrimEnd(' ');
+            _curentLine = _curentLine.Split("//")[0];
             lineCount++;
         }
 
@@ -66,8 +72,7 @@ namespace VmTranslator
         {
             if (commandTypes.ContainsKey(_curentLine) && commandTypes[_curentLine] == "C_ARITHMETIC") return _curentLine;
             string[] args = _curentLine.Split(' ');
-            //string arg1 = args.Length == 1 ? args[0] : args.Length == 3 ? args[1] : throw new Exception("Invalid Command");
-            return args[1];//commandTypes[arg1] == "C_ARITHMETIC" ? arg1 : commandTypes[arg1];
+            return args[1];
         }
 
         public int Arg2()

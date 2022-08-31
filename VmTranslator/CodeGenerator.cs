@@ -9,19 +9,32 @@ namespace VmTranslator
 {
     public class CodeGenerator
     {
-        private readonly string _filePath;
+        private  string _destFile;
         StreamWriter writer;
         string currLine;
+
         string _staticVar;
+        int _retAddrCount = 0;
+        int _tempCount = 0;
+        int _endFrameCount = 0;
+        public int lineCount = 0;
+        string _funcName = "";
+        string _fileName;
 
+        int _runningInt = 0;
         Dictionary<string,string> ramMap = new Dictionary<string, string>();
-        public CodeGenerator(string filePath)
-        {
-            _filePath = filePath;
-            string[] paths = _filePath.Split('\\');
-            _staticVar = paths[paths.Length - 1];
+        Dictionary<string, string> functionLabels = new Dictionary<string, string>();
+        Dictionary<string, string> returnAddresses = new Dictionary<string, string>();
 
-            writer = new StreamWriter(filePath, false);
+        public void SetFileName(string file)
+        {
+            _destFile = file;
+            _staticVar = _destFile.Replace("asm","");
+             _fileName = _staticVar;
+            writer = new StreamWriter(_destFile, false);
+        }
+        public CodeGenerator()
+        {
             ramMap.Add("local","LCL");
             ramMap.Add("argument","ARG");
             ramMap.Add("this", "THIS");
@@ -33,7 +46,7 @@ namespace VmTranslator
         public void WritePushPop(PushPopCommand command,int lineCount)
         {
             Console.WriteLine(command);
-            string staticVarName = _staticVar.Replace(".asm", $".{command.Index}");
+            string staticVarName = _staticVar+$".{command.Index}";
 
             if (command.PushPop.ToLower() == "push"){
                 writer.WriteLine($"// {command.PushPop} {command.Segment} {command.Index}");
@@ -59,18 +72,14 @@ namespace VmTranslator
                     writer.WriteLine("D=A");
                     writer.WriteLine($"@{command.Index}");
                     writer.WriteLine("D=D+A");
-                    writer.WriteLine("@R6000");
-                    writer.WriteLine("M=D");
-                    writer.WriteLine("A=M");
+                    writer.WriteLine("A=D");
                     writer.WriteLine("D=M");
                     writer.WriteLine("@SP");
                     writer.WriteLine("A=M");
                     writer.WriteLine("M=D");
 
-                    writer.WriteLine("@1");
-                    writer.WriteLine("D=A");
                     writer.WriteLine("@SP");
-                    writer.WriteLine("M=M+D");
+                    writer.WriteLine("M=M+1");
                     return;
                 }
                 if (command.Segment == "pointer")
@@ -155,20 +164,17 @@ namespace VmTranslator
                 }
                 if (command.Segment == "temp")
                 {
-                    writer.WriteLine($"@SP");
-                    writer.WriteLine("M=M-1");
-
 
                     writer.WriteLine($"@5");
                     writer.WriteLine("D=A");
                     writer.WriteLine($"@{command.Index}");
                     writer.WriteLine("D=D+A");
-                    writer.WriteLine("@R6000");
+                    writer.WriteLine($"@popTemp_Temp:{_runningInt}");
                     writer.WriteLine("M=D");
                     writer.WriteLine("@SP");
-                    writer.WriteLine("A=M");
+                    writer.WriteLine("AM=M-1");
                     writer.WriteLine("D=M");
-                    writer.WriteLine($"@R6000");
+                    writer.WriteLine($"@popTemp_Temp:{_runningInt++}");
                     writer.WriteLine("A=M");
                     writer.WriteLine("M=D");
                     return;
@@ -199,24 +205,21 @@ namespace VmTranslator
                     }
                     return;
                 }
-                writer.WriteLine($"@SP");
-                writer.WriteLine("M=M-1");
-
                 writer.WriteLine($"@{command.Index}");
                 writer.WriteLine("D=A");
-                
                 writer.WriteLine($"@{ramMap[command.Segment]}");
                 writer.WriteLine("D=M+D");
-                //writer.WriteLine("D=M");
-                writer.WriteLine($"@R6000");
+
+                writer.WriteLine($"@pop:{_runningInt}");
                 writer.WriteLine("M=D");
+
                 writer.WriteLine("@SP");
-                writer.WriteLine("A=M");
+                writer.WriteLine("AM=M-1");
                 writer.WriteLine("D=M");
-                writer.WriteLine($"@R6000");
+                writer.WriteLine($"@pop:{_runningInt++}");
                 writer.WriteLine("A=M");
                 writer.WriteLine("M=D");
-                
+
             }
 
         }
@@ -229,49 +232,29 @@ namespace VmTranslator
                 case "add":
                     writer.WriteLine($"//{command}");
                     writer.WriteLine("@SP");
-                    writer.WriteLine("M=M-1");
-                    writer.WriteLine("A=M");
+                    writer.WriteLine("AM=M-1");
+                    writer.WriteLine("A=A-1");
                     writer.WriteLine("D=M");
-                    writer.WriteLine("@R6000"); //temp1
+                    writer.WriteLine("@SP"); //temp1
+                    writer.WriteLine("A=M");
+                    writer.WriteLine("D=D+M");
+                    writer.WriteLine("@SP");
+                    writer.WriteLine("A=M-1");
                     writer.WriteLine("M=D");
-                    writer.WriteLine("@SP");
-                    writer.WriteLine("M=M-1");
-                    writer.WriteLine("A=M");
-                    writer.WriteLine("D=M");
-                    writer.WriteLine("@R6000");
-                    writer.WriteLine("M=M+D");
-                    writer.WriteLine("D=M");
-                    writer.WriteLine("@SP");
-                    //writer.WriteLine("M=M+1");
-                    writer.WriteLine("A=M");
-                    writer.WriteLine("M=D");
-                    writer.WriteLine("@1");
-                    writer.WriteLine("D=A");
-                    writer.WriteLine("@SP");
-                    writer.WriteLine("M=M+D");
+
                     break;
                 case "sub":
                     writer.WriteLine($"//{command}");
                     writer.WriteLine("@SP");
-                    writer.WriteLine("M=M-1");
-                    writer.WriteLine("A=M");
+                    writer.WriteLine("AM=M-1");
+                    writer.WriteLine("A=A-1");
                     writer.WriteLine("D=M");
-                    writer.WriteLine("@R6000"); //temp1
+                    writer.WriteLine("@SP"); //temp1
+                    writer.WriteLine("A=M");
+                    writer.WriteLine("D=D-M");
+                    writer.WriteLine("@SP");
+                    writer.WriteLine("A=M-1");
                     writer.WriteLine("M=D");
-                    writer.WriteLine("@SP");
-                    writer.WriteLine("M=M-1");
-                    writer.WriteLine("A=M");
-                    writer.WriteLine("D=M");
-                    writer.WriteLine("@R6000");  //temp2
-                    writer.WriteLine("M=D-M");
-                    writer.WriteLine("D=M");
-                    writer.WriteLine("@SP");
-                    writer.WriteLine("A=M");
-                    writer.WriteLine("M=D");
-                    writer.WriteLine("@1");
-                    writer.WriteLine("D=A");
-                    writer.WriteLine("@SP");
-                    writer.WriteLine("M=M+D");
                     break;
                 case "neg":
                     writer.WriteLine("@SP");
@@ -421,5 +404,253 @@ namespace VmTranslator
             }
             
         }
-    }
+
+        public void WriteInit()
+        {
+            writer.WriteLine("@256");
+            writer.WriteLine("D=A");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=D");
+            WriteCall($"Sys.init", 0);
+        }
+
+        public void WriteLabel(string label)
+        {
+            
+            string funcLabel = $"{_funcName}${label}";
+            functionLabels.TryAdd(label, funcLabel);
+            writer.WriteLine($"//write label  {funcLabel}");
+            writer.WriteLine($"({funcLabel})");
+        }
+
+        public void WriteGoTo(string dest)
+        {
+            /*if (functionLabels.ContainsKey(dest))
+            {
+                dest = functionLabels[dest];
+                writer.WriteLine($"//goto {dest}");
+                writer.WriteLine($"@{dest}");
+                writer.WriteLine($"0;JMP");
+                return;
+            }*/
+            writer.WriteLine($"//goto {dest}");
+            writer.WriteLine($"@{_funcName}${dest}");
+            writer.WriteLine($"0;JMP");
+        }
+
+        public void WriteIf(string label)
+        {
+            
+            if (functionLabels.ContainsKey(label))
+            {
+                label = functionLabels[label];
+                
+            }
+            writer.WriteLine($"//if-goto {label}");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=M-1");
+            writer.WriteLine("A=M");
+            writer.WriteLine("D=M");
+            writer.WriteLine($"@{_funcName}${label}");
+            writer.WriteLine("D;JLT");
+            writer.WriteLine("D;JGT");
+        }
+
+        public void WriteFunction(string funcName,int nVars)
+        {
+            _funcName = funcName;
+            writer.WriteLine($"// Func def {funcName}");
+            writer.WriteLine($"({funcName})");
+            writer.WriteLine($"   @{nVars}");
+            writer.WriteLine("     D=A");
+            writer.WriteLine($"   @temp:{_tempCount}");
+            writer.WriteLine("    M=D");
+            writer.WriteLine($"   (WHILE_LOOP:{_tempCount})");
+            writer.WriteLine($"       @temp:{_tempCount}");
+            writer.WriteLine("        D=M");
+            writer.WriteLine($"       @END_LOOP:{_tempCount}");
+            writer.WriteLine("        D;JEQ");
+            writer.WriteLine("        @0");
+            writer.WriteLine("        D=A");
+            writer.WriteLine("        @SP");
+            writer.WriteLine("        A=M");
+            writer.WriteLine("        M=D");
+            writer.WriteLine("        @SP");
+            writer.WriteLine("        M=M+1");
+            writer.WriteLine($"       @temp:{_tempCount}");
+            writer.WriteLine("        M=M-1");
+            writer.WriteLine($"       @WHILE_LOOP:{_tempCount}");
+            writer.WriteLine("        0;JMP");
+            writer.WriteLine($"(END_LOOP:{_tempCount++})");
+        }
+
+        public void WriteCall(string funcName,int nArgs)
+        {
+            writer.WriteLine($"//call {funcName}");
+            string returnAddr = $"{_funcName}$ret.{_retAddrCount++}";
+            writer.WriteLine($"@{returnAddr}");
+            //writer.WriteLine("A=M");
+            writer.WriteLine("D=A");
+            writer.WriteLine("@SP");
+            writer.WriteLine("A=M");
+            writer.WriteLine("M=D");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=M+1");
+
+            writer.WriteLine("@LCL");
+            //writer.WriteLine("A=M");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@SP");
+            writer.WriteLine("A=M");
+            writer.WriteLine("M=D");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=M+1");
+
+            writer.WriteLine("@ARG");
+            //writer.WriteLine("A=M");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@SP");
+            writer.WriteLine("A=M");
+            writer.WriteLine("M=D");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=M+1");
+
+            writer.WriteLine("@THIS");
+            //writer.WriteLine("A=M");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@SP");
+            writer.WriteLine("A=M");
+            writer.WriteLine("M=D");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=M+1");
+
+            writer.WriteLine("@THAT");
+            //writer.WriteLine("A=M");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@SP");
+            writer.WriteLine("A=M");
+            writer.WriteLine("M=D");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=M+1");
+
+            writer.WriteLine("@5");
+            writer.WriteLine("D=A");
+            writer.WriteLine("@SP");
+            writer.WriteLine("D=M-D");
+            writer.WriteLine($"@{nArgs}");
+            writer.WriteLine("D=D-A");
+            writer.WriteLine("@ARG");
+            writer.WriteLine("M=D");
+
+
+            writer.WriteLine("@SP");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@LCL");
+            writer.WriteLine("M=D");
+
+            writer.WriteLine($"@{funcName}");
+            writer.WriteLine("0;JMP");
+            writer.WriteLine($"({returnAddr})");
+
+
+
+        }
+
+        public void WriteReturn()
+        {
+            writer.WriteLine("//return Command");
+            writer.WriteLine("@LCL");
+            writer.WriteLine("D=M");
+            writer.WriteLine($"@endFrame:{_endFrameCount}");
+            writer.WriteLine("M=D");
+
+            writer.WriteLine("@5");
+            writer.WriteLine("D=D-A");
+            writer.WriteLine("A=D");
+            writer.WriteLine("D=M");
+            writer.WriteLine($"@returnAddress:{_runningInt}");
+            writer.WriteLine("M=D");
+            writer.WriteLine("@SP");
+            writer.WriteLine("AM=M-1");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@ARG");
+            writer.WriteLine("A=M");
+            writer.WriteLine("M=D");
+
+            writer.WriteLine("@ARG");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@SP");
+            writer.WriteLine("M=D+1");
+
+            writer.WriteLine($"@endFrame:{_endFrameCount}");
+            writer.WriteLine("A=M-1");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@THAT");
+            writer.WriteLine("M=D");
+
+
+            writer.WriteLine($"@endFrame:{_endFrameCount}");
+            writer.WriteLine("A=M-1");
+            writer.WriteLine("A=A-1");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@THIS");
+            writer.WriteLine("M=D");
+
+            writer.WriteLine("@3");
+            writer.WriteLine("D=A");
+            writer.WriteLine($"@endFrame:{_endFrameCount}");
+            writer.WriteLine("A=M-D");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@ARG");
+            writer.WriteLine("M=D");
+
+            writer.WriteLine("@4");
+            writer.WriteLine("D=A");
+            writer.WriteLine($"@endFrame:{_endFrameCount++}");
+            writer.WriteLine("A=M-D");
+            writer.WriteLine("D=M");
+            writer.WriteLine("@LCL");
+            writer.WriteLine("M=D");
+
+            writer.WriteLine($"@returnAddress:{_runningInt++}");
+            writer.WriteLine("A=M");
+            writer.WriteLine("0;JMP");
+        }
+
+        public void Merge(string directoryName)
+        {
+            string asmFinal = directoryName+"\\"+directoryName+".asm";
+            Console.WriteLine("asmFile "+asmFinal);
+            StreamWriter streamWriter = new StreamWriter(asmFinal, false);
+            string sysFile =Directory.GetFiles(directoryName,"*Sys.asm").First();
+            //sysFile = sysFile.Replace(directoryName+"\\", "");
+            Console.WriteLine("Sys file "+sysFile);
+            StreamReader streamReader;
+            
+            streamReader = new StreamReader(sysFile);
+            string line;
+            while (!streamReader.EndOfStream)
+            {
+                
+                line = streamReader.ReadLine();
+                streamWriter.WriteLine(line);
+            }
+            streamWriter.WriteLine();
+            streamReader.Close();
+            foreach(string file in Directory.GetFiles(directoryName, "*.asm"))
+            {
+                Console.WriteLine("reading asms: "+file);
+                if (file==asmFinal) continue;
+                streamReader = new StreamReader(file);
+                while (!streamReader.EndOfStream)
+                {
+                    line = streamReader.ReadLine();
+                    streamWriter.WriteLine(line);
+                }
+                streamWriter.WriteLine();
+                streamReader.Close();
+            }
+            streamWriter.Close();
+        }
+    } 
 }
