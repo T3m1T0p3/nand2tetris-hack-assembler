@@ -1,0 +1,5 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.exe
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.runtimeconfig.json
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.pdb

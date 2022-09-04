@@ -1,0 +1,16 @@
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\JackCompiler.exe
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\JackCompiler.deps.json
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\JackCompiler.runtimeconfig.json
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\JackCompiler.runtimeconfig.dev.json
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\JackCompiler.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\ref\JackCompiler.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\JackCompiler.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.csproj.AssemblyReference.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.AssemblyInfoInputs.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.AssemblyInfo.cs
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.csproj.CoreCompileInputs.cache
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\ref\JackCompiler.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Release\net5.0\JackCompiler.genruntimeconfig.cache

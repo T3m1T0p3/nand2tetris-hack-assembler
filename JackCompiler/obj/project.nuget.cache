@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "syhSP55OdyfoMtu15D37s3zz5AGQPnx3MhWseaRLkKIEsd2DVKmc3Uev1doK1GNDzs/2DGgW383R714gnmtTkQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Oyinlola\\source\\repos\\HackAssembler\\JackCompiler\\JackCompiler.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
