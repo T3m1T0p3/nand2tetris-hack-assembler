@@ -13,4 +13,3 @@ C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Debug\net5.0\JackC
 C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Debug\net5.0\ref\JackCompiler.dll
 C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Debug\net5.0\JackCompiler.pdb
 C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Debug\net5.0\JackCompiler.genruntimeconfig.cache
-C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\obj\Debug\net5.0\JackCompiler.csproj.AssemblyReference.cache

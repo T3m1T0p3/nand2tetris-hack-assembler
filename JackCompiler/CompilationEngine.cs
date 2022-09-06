@@ -13,12 +13,14 @@ namespace JackCompiler
         StreamWriter _tokenWriter;
         //StreamReader _reader;
         Tokenizer _tokenizer;
-        //string keyword;
+        string name;
         public CompilationEngine(string inputFile)//,string outputFile)
+
         {
-            string outputFile = inputFile.Replace(".jack", ".XML");
-            //string tokenFile = inputFile + "T";
-            string tokenFile=inputFile.Replace(".jack", "T.XML");
+            name = inputFile;
+            string outputFile = inputFile.Replace(".jack", ".xml");
+
+            string tokenFile=inputFile.Replace(".jack", "T.xml");
             _tokenizer = new Tokenizer(inputFile);
             _writer = new StreamWriter(outputFile, false);
             _tokenWriter = new StreamWriter(tokenFile, false);
@@ -31,6 +33,7 @@ namespace JackCompiler
             //Console.WriteLine("compileClass");
             WriteGrammarType("class");
             WriteTokenTag("token");
+            Console.WriteLine("Staring new file:" + name);
             InsertClass();
             InsertIdentifier();
             InsertLeftCurly();
@@ -39,12 +42,17 @@ namespace JackCompiler
             {
                 CompileSubroutineDec();
             }
+            Console.WriteLine("Closing with right curly:"+_tokenizer.HasMoreToken());
             InsertRightCurly();
+            Console.WriteLine("right curly inserted");
             WriteGrammarType("/class");
             WriteTokenTag("/token");
             _tokenizer.Close();
             _writer.Close();
             _tokenWriter.Close();
+            _tokenWriter.Dispose();
+            _writer.Dispose();
+            Console.WriteLine("Closed All");
 
         }
 
@@ -52,13 +60,13 @@ namespace JackCompiler
         public void CompileClassVarDec()
         {
 
-            WriteGrammarType("ClassVarDec");
-          //  Console.WriteLine("ClassVarDec");
+            //WriteGrammarType("ClassVarDec");
+           Console.WriteLine("ClassVarDec");
             while (_tokenizer.Identifier() == "static" || _tokenizer.Identifier() == "field")
             {
-                WriteGrammarType("ClassVarDec");
+                WriteGrammarType("classVarDec");
                 InsertStaticField();
-                InsertIdentifier();
+                InsertIdentifier();                
                 InsertIdentifier();
                 char symbol = _tokenizer.Symbol();
                 while (symbol != ';')
@@ -68,11 +76,11 @@ namespace JackCompiler
                     symbol = _tokenizer.Symbol();
                 }
                 InsertSemiColon();
-                WriteGrammarType("/ClassVarDec");
+                WriteGrammarType("/classVarDec");
             }
             
-            WriteGrammarType("/ClassVarDec");
-            //Console.WriteLine("/ClassVarDec");
+            //WriteGrammarType("/ClassVarDec");
+            Console.WriteLine("/ClassVarDec");
         }
         //Sorted
         public void CompileSubroutineDec()
@@ -81,21 +89,31 @@ namespace JackCompiler
             Console.WriteLine("CompileSubDec");
             WriteGrammarType("subroutineDec");
             InsertConMethodFunction();
+            if (_tokenizer.TokenType() == "KEYWORD")
+            {
+                Console.WriteLine("Keyword:"+_tokenizer.Identifier());
+                InsertKeyword();
+            }
+            else
+            {
+                InsertIdentifier();
+            }
             InsertIdentifier();
-            InsertIdentifier();
+            Console.WriteLine(_tokenizer.Identifier());
             InsertLeftBrace();
             CompileParameterList();
             InsertRightBrace();
             CompileSubroutineBody();
-            //Console.WriteLine("All subroutines successfully paresed");
+            //
             WriteGrammarType("/subroutineDec");
+            Console.WriteLine("All subroutines successfully paresed");
 
         }
 
         //Sorted
         public void CompileSubroutineBody()
         {
-            //Console.WriteLine("CompileSubBody");
+            Console.WriteLine("CompileSubBody");
             WriteGrammarType("subroutineBody");
             InsertLeftCurly();
             string identifier = _tokenizer.Identifier();
@@ -108,21 +126,30 @@ namespace JackCompiler
             //CompileReturnStatement();
             //Console.WriteLine("Return Statement succeffuly compiled in subBody");
             InsertRightCurly();
-            //Console.WriteLine("/CompileSubBody");
+            //
             WriteGrammarType("/subroutineBody");
+            Console.WriteLine("/CompileSubBody");
 
         }
         public void CompileVarDec()
         {
             //var SquareGame game;
-            //Console.WriteLine("CompileVarDec");
-             WriteGrammarType("varDec");
+            Console.WriteLine("CompileVarDec");
+             //WriteGrammarType("varDec");
             while (_tokenizer.Identifier() == "var")
             {
                 WriteGrammarType("varDec");
                 Console.WriteLine(_tokenizer.Identifier());
                 InsertVar();
-                InsertIdentifier();
+                if (_tokenizer.TokenType() == "KEYWORD")
+                {
+                    InsertKeyword();
+                }
+                else
+                {
+                    InsertIdentifier();
+                }
+                
                 InsertIdentifier();
                 char symbol = _tokenizer.Symbol();
                 while (symbol == ',')
@@ -134,16 +161,17 @@ namespace JackCompiler
                 InsertSemiColon();
                 WriteGrammarType("/varDec");
             }
-            //Console.WriteLine("/CompileVarDec");
-   //       WriteGrammarType("/varDec");
+           
+            //WriteGrammarType("/varDec");
+            Console.WriteLine("/CompileVarDec");
 
         }
 
         public void CompileStatements()
         {
-            //Console.WriteLine("CompileStatements");
+            Console.WriteLine("CompileStatements");
             string identifier = _tokenizer.Identifier();
-            WriteGrammarType("statement");
+            WriteGrammarType("statements");
             while (identifier == "if" || identifier == "let" || identifier == "while" || identifier == "do" || identifier == "return")
             {
                 switch (identifier)
@@ -172,9 +200,9 @@ namespace JackCompiler
                         break;
                 }
             }
-            //Console.WriteLine("Exiting compilestatements while with identifier:" + identifier);
-            //Console.WriteLine("/CompileStatements");
-            WriteGrammarType("/statement");
+            Console.WriteLine("Exiting compilestatements while with identifier:" + identifier);
+            Console.WriteLine("/CompileStatements");
+            WriteGrammarType("/statements");
         }
 
         
@@ -184,23 +212,35 @@ namespace JackCompiler
         {
             string identifier;
             WriteGrammarType("parameterList");
-            //Console.WriteLine("parameterList");
+            Console.WriteLine("parameterList");
             identifier = _tokenizer.Identifier();
 
             while (identifier != ")")
             {
+                if (_tokenizer.TokenType() == "KEYWORD")
+                {
+                    Console.WriteLine("KeyowrdType in paramList:" + _tokenizer.Identifier());
+                    InsertKeyword();
+                }
+                else
+                {
+                    Console.WriteLine("type in paramList:" + _tokenizer.Identifier());
+                    InsertIdentifier();
+                }
+                Console.WriteLine("Identifier in paramList:" + _tokenizer.Identifier());
                 InsertIdentifier();
-                InsertComma();
+                identifier = _tokenizer.Identifier();
+                if(identifier!=")") InsertComma();
                 identifier = _tokenizer.Identifier();
             }
-            WriteGrammarType("/parameterLst");
-           // Console.WriteLine("/parameterList");
+            WriteGrammarType("/parameterList");
+           Console.WriteLine("/parameterList");
         }
 
         //Sorted
         public void CompileLetStatement()
         {
-            //Console.WriteLine("CompileLetStatement");
+            Console.WriteLine("CompileLetStatement");
             WriteGrammarType("letStatement");
             InsertLet();
             InsertIdentifier();
@@ -216,13 +256,13 @@ namespace JackCompiler
             //Console.WriteLine("statment compiled in let");
             if(_tokenizer.Symbol()==';') InsertSemiColon();
             WriteGrammarType("/letStatement");
-            //Console.WriteLine("/CompileLetStatement");
+            Console.WriteLine("/CompileLetStatement");
 
         }
 
         public void CompileIfStatement()
         {
-            //Console.WriteLine("CompileIfStaement");
+            Console.WriteLine("CompileIfStaement");
             WriteGrammarType("ifStatement");
 
             InsertIf();
@@ -246,14 +286,14 @@ namespace JackCompiler
                 }
                 
             }
-            //Console.WriteLine("/ifStatement");
+            Console.WriteLine("/ifStatement");
             WriteGrammarType("/ifStatement");
 
         }
 
         public void CompileWhileStatement()
         {
-            //Console.WriteLine("CompileWhileStatement");
+            Console.WriteLine("CompileWhileStatement");
             WriteGrammarType("whileStatement");
             InsertWhile();
             InsertLeftBrace();
@@ -262,20 +302,20 @@ namespace JackCompiler
             InsertLeftCurly();
             CompileStatements();
             InsertRightCurly();
-            //Console.WriteLine("/WhileStatement");
+            Console.WriteLine("/WhileStatement");
             WriteGrammarType("/whileStatement");
         }
 
         public void CompileDoStatement()
         {
-            //Console.WriteLine("CompileDostatement");
+            Console.WriteLine("CompileDostatement");
             WriteGrammarType("doStatement");
             InsertDo();
             InsertIdentifier();
             CompileSubroutineCall();
             InsertSemiColon();
             WriteGrammarType("/doStatement");
-            //Console.WriteLine("/doStatement");
+            Console.WriteLine("/doStatement");
 
         }
 
@@ -283,23 +323,23 @@ namespace JackCompiler
         {
 
             WriteGrammarType("returnStatement");
-            //Console.WriteLine("returnStatement");
+            Console.WriteLine("returnStatement");
             InsertReturn();
-            //Console.WriteLine("return insert. Next identifier: " + _tokenizer.Identifier());
+            Console.WriteLine("return insert. Next identifier: " + _tokenizer.Identifier());
             string identifier = _tokenizer.Identifier();
             if (identifier != ";")
             {
                 CompileExpression();
             }
             InsertSemiColon();
-            //Console.WriteLine("/returnStatement");
+            Console.WriteLine("/returnStatement");
             WriteGrammarType("/returnStatement");
         }
 
         //Sorted
         public void CompileTerm()
         {
-            //Console.WriteLine("CompileTerm");
+            Console.WriteLine("CompileTerm");
             string tokenType;
             string identifier;
             WriteGrammarType("term");
@@ -340,7 +380,7 @@ namespace JackCompiler
             {
                 InsertIdentifier();
                 char symbol = _tokenizer.Symbol();
-                //Console.WriteLine("Compile term lookeahed " + symbol);
+                Console.WriteLine("Compile term lookeahed " + symbol);
                 switch (symbol)
                 {
                     case '[':
@@ -361,17 +401,18 @@ namespace JackCompiler
                 }
             }
             WriteGrammarType("/term");
-            //Console.WriteLine("/term" );
-            //Console.WriteLine("Exititng term with the identifier:"+_tokenizer.Identifier());
+            
+            Console.WriteLine("Exititng term with the identifier:"+_tokenizer.Identifier());
+            Console.WriteLine("/term");
         }
 
         public void CompileExpression()
         {
-            //Console.WriteLine("Expression");
+            Console.WriteLine("Expression");
             WriteGrammarType("expression");
             CompileTerm();
             string op = _tokenizer.Identifier();
-            while (op == "-" || op == "+" || op == "~" || op == "/" || op == "*" || op == "&" || op == "<" || op == ">" || op == "|")
+            while (op == "-" || op == "+" || op == "~" || op == "/" || op == "*" || op == "&" || op == "<" || op == ">" || op == "|"|| op == "=")
             {
                 InsertOperator();
                 CompileTerm();
@@ -379,12 +420,12 @@ namespace JackCompiler
             }
             //if(_tokenizer.Symbol()==';') InsertSemiColon();
             WriteGrammarType("/expression");
-            //Console.WriteLine("/Expressiom");
+            Console.WriteLine("/Expressiom");
         }
 
         public void CompileSubroutineCall()
         {
-            //Console.WriteLine("SubroutineCall");
+            Console.WriteLine("SubroutineCall");
             string symbol;
             //InsertIdentifier();
             symbol = _tokenizer.Identifier();
@@ -403,7 +444,7 @@ namespace JackCompiler
         public void CompileExpressionList()
         {
             string identifier = _tokenizer.Identifier();
-            //Console.WriteLine("expressionList");
+            Console.WriteLine("expressionList");
             WriteGrammarType("expressionList");
             while (identifier != ")")
             {
@@ -412,7 +453,7 @@ namespace JackCompiler
                 identifier = _tokenizer.Identifier();
             }
             WriteGrammarType("/expressionList");
-            //Console.WriteLine("/expressionList");
+            Console.WriteLine("/expressionList");
             
         }
 
@@ -440,9 +481,13 @@ namespace JackCompiler
             if (c != '}') throw new Exception("char not right curly: " + c);
             _writer.WriteLine($"<symbol> {c} </symbol>");
             _tokenWriter.WriteLine($"<symbol> {c} </symbol>");
-           // Console.WriteLine("Goint for advance");
-            if (!_tokenizer.HasMoreToken()) _tokenizer.Advance();
-            //Console.WriteLine("Aadvance");
+            // Console.WriteLine("Goint for advance");
+            if (!_tokenizer.HasMoreToken())
+            {
+                Console.WriteLine("Advancing:" +_tokenizer.HasMoreToken());
+                _tokenizer.Advance();
+                Console.WriteLine("Advancing:");
+            }
         }
 
         public void InsertLeftBrace()
@@ -482,14 +527,19 @@ namespace JackCompiler
         public void InsertIdentifier()
         {
             string reff = _tokenizer.Identifier();
-            Console.WriteLine("Identifier inserted is :" + reff);
-            _writer.WriteLine($"<identifier> {reff} </identifier>");
-            _tokenWriter.WriteLine($"<identifier> {reff} </identifier>");
-            if (!_tokenizer.HasMoreToken())
+            //Console.WriteLine("Identifier inserted is :" + reff);
+            if (_tokenizer.TokenType() == "KEYWORD") InsertKeyword();
+            else
             {
-                _tokenizer.Advance();
-                //Console.WriteLine("next identifier is:" + _tokenizer.Identifier());
+                _writer.WriteLine($"<identifier> {reff} </identifier>");
+                _tokenWriter.WriteLine($"<identifier> {reff} </identifier>");
+                if (!_tokenizer.HasMoreToken())
+                {
+                    _tokenizer.Advance();
+                    //Console.WriteLine("next identifier is:" + _tokenizer.Identifier());
+                }
             }
+            
         }
         public void InsertLeftSquareBrace()
         {

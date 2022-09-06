@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 namespace JackCompiler
 {
     public class JackAnalyzer
@@ -11,8 +11,16 @@ namespace JackCompiler
         public static void Main(string[] args)
         {
             string path = args[0];
-            //Tokenizer tokenizer = new Tokenizer(path);
-            CompilationEngine engine = new CompilationEngine(path);
+            CompilationEngine engine;
+            if (Directory.Exists(path))
+            {
+                foreach (string file in Directory.GetFiles(path, "*.jack"))
+                {
+                    engine = new CompilationEngine(file);
+                }
+                return;
+            }
+            engine = new CompilationEngine(path);
         }
     }
 }

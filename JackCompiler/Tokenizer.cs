@@ -63,10 +63,13 @@ namespace JackCompiler
         {
             string temp = "";
             char currChar = enumerator.Current;
+            Console.WriteLine(1);
             if(currChar==' ')
             {
-                while(currChar==' ')
+                Console.WriteLine(2);
+                while (currChar==' ')
                 {
+                    Console.WriteLine("processing empty char");
                     if (!enumerator.MoveNext())
                     {
                         ProcessLine();
@@ -77,15 +80,19 @@ namespace JackCompiler
             //prcess string const
             if (currChar == '\"')
             {
-                if(!enumerator.MoveNext()) ProcessLine();
+                Console.WriteLine(3);
+                if (!enumerator.MoveNext()) ProcessLine();
                 currChar = enumerator.Current;
                 while (currChar != '\"')
                 {
+                    Console.WriteLine(4);
                     temp += currChar.ToString();
                     if(!enumerator.MoveNext()) ProcessLine();
                     currChar = enumerator.Current;
                 }
+                Console.WriteLine(5);
                 if (!enumerator.MoveNext()) ProcessLine();
+                Console.WriteLine(6);
                 _currentToken = temp;
                 _stringConst = true;
                 //Console.WriteLine($"strng cnst: {_currentToken}");
@@ -95,26 +102,35 @@ namespace JackCompiler
             else if (symbols.Contains(currChar))
             {
                 //Console.WriteLine($"hit symbol processor");
+                Console.WriteLine(7);
                 _currentToken = currChar.ToString();
+                Console.WriteLine("possibly last char:" + _currentToken);
                 if(!enumerator.MoveNext()) ProcessLine();
+                Console.WriteLine(8);
                 return;
             }
 
             else
             {
+                Console.WriteLine(9);
                 //Console.WriteLine($"hit identifier processor");
                 while (!symbols.Contains(currChar) && currChar != ' ')
                 {
+                    Console.WriteLine(10);
                     temp += currChar.ToString();
                     if (!enumerator.MoveNext()) ProcessLine();
+                    Console.WriteLine(11);
                     currChar = enumerator.Current;
                 }
 
                 if (currChar == ' ')
                 {
+                    Console.WriteLine(12);
                     if (!enumerator.MoveNext()) ProcessLine();
+                    Console.WriteLine(13);
                 }
                 _currentToken = temp;
+                Console.WriteLine(14);
                 //Console.WriteLine($"identifier: {_currentToken}");
                 return;
             }
@@ -187,60 +203,89 @@ namespace JackCompiler
         }
         public void ProcessLine()
         {
+            Console.WriteLine("Processline called");
             if (_reader.EndOfStream)
             {
+                Console.WriteLine(15);
                 enumerator.MoveNext();
+                Console.WriteLine(16);
                 return;
             }
-
+            Console.WriteLine("Not eof");
             line = _reader.ReadLine();
+            if (line == null && _reader.EndOfStream)
+            {
+                Console.WriteLine("Hit EOF");
+                return;
+                
+            }
+            Console.WriteLine("line not null");
+            if (!String.IsNullOrEmpty(line)) line = line.Trim();
+            Console.WriteLine("line not empty");
+            if (line.StartsWith("//")|| line.StartsWith("/**")|| String.IsNullOrEmpty(line))
+            {
+                Console.WriteLine("calling purge");
+                Purge();
+                Console.WriteLine("purged");
+            }
+            Console.WriteLine(line);
+            line = line.Split("//")[0];
             line = line.Trim();
+            Console.WriteLine("Processed Line:" + line);
+            enumerator = line.GetEnumerator();
+            enumerator.MoveNext();
+        }
+
+        public void Purge()
             
-            //Console.WriteLine(line);
+        {
+            Console.WriteLine("current line:" + _reader.ToString() + " Eof status:" + _reader.EndOfStream);
+            if (_reader.EndOfStream) return;
+            if (!line.StartsWith("//") && !line.StartsWith("/**") && !String.IsNullOrEmpty(line)&&!line.StartsWith("*")) return;
             if (line.StartsWith("//"))
             {
-                while (line.StartsWith("//")|| String.IsNullOrEmpty(line) && !_reader.EndOfStream) 
+                while (line.StartsWith("//"))
                 {
                     line = _reader.ReadLine();
-                    //Console.WriteLine(line);
+                    line = line.Trim();
                 }
-            }
-            if (line.StartsWith("/**"))
-            {
-                //Console.WriteLine(line);
-                if (line.EndsWith("*/"))
-                {
-                   // Console.WriteLine(line);
-                    line = _reader.ReadLine();
-                }
-                else
-                {
-                    while (!line.EndsWith("*/"))
-                    {
-                        
-                        line = _reader.ReadLine();
-                        line = line.Trim();
-                        //Console.WriteLine(line);
-                    }
-                }
+                Purge();
+
             }
             if (String.IsNullOrEmpty(line))
             {
                 while (String.IsNullOrEmpty(line)&&!_reader.EndOfStream)
                 {
                     line = _reader.ReadLine();
+                    if (!String.IsNullOrEmpty(line)) line=line.Trim();
                 }
-             }
-            line = line.Split("//")[0];
-            line = line.Trim();
-            //Console.WriteLine("Processed Line:" + line);
-            enumerator = line.GetEnumerator();
-            enumerator.MoveNext();
+                Purge();
+            }
+            if (line.StartsWith("/**"))
+            {
+                if (line.EndsWith("*/"))
+                {
+                    line = _reader.ReadLine();
+                    if (!String.IsNullOrEmpty(line)) line = line.Trim();
+                    return;
+                }
+                while (!line.EndsWith("*/"))
+                {
+                    line = _reader.ReadLine();
+                    if (!String.IsNullOrEmpty(line))  line = line.Trim();
+                    Console.WriteLine(line);
+                }
+                line = _reader.ReadLine();
+                Purge();
+            }
+            
         }
 
         public void Close()
         {
+            
             _reader.Close();
+            _reader.Dispose();
         }
     }
 }
