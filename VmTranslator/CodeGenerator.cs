@@ -11,7 +11,6 @@ namespace VmTranslator
     {
         private  string _destFile;
         StreamWriter writer;
-        string currLine;
 
         string _staticVar;
         int _retAddrCount = 0;
@@ -46,7 +45,8 @@ namespace VmTranslator
         public void WritePushPop(PushPopCommand command,int lineCount)
         {
             Console.WriteLine(command);
-            string staticVarName = _staticVar+$".{command.Index}";
+            string staticVarName = _staticVar+$"{command.Index}";
+            staticVarName = staticVarName.Replace("/", "").Replace("\\","");
 
             if (command.PushPop.ToLower() == "push"){
                 writer.WriteLine($"// {command.PushPop} {command.Segment} {command.Index}");
@@ -235,7 +235,7 @@ namespace VmTranslator
                     writer.WriteLine("AM=M-1");
                     writer.WriteLine("A=A-1");
                     writer.WriteLine("D=M");
-                    writer.WriteLine("@SP"); //temp1
+                    writer.WriteLine("@SP"); 
                     writer.WriteLine("A=M");
                     writer.WriteLine("D=D+M");
                     writer.WriteLine("@SP");
@@ -249,7 +249,7 @@ namespace VmTranslator
                     writer.WriteLine("AM=M-1");
                     writer.WriteLine("A=A-1");
                     writer.WriteLine("D=M");
-                    writer.WriteLine("@SP"); //temp1
+                    writer.WriteLine("@SP");
                     writer.WriteLine("A=M");
                     writer.WriteLine("D=D-M");
                     writer.WriteLine("@SP");
@@ -270,7 +270,7 @@ namespace VmTranslator
                 case "eq":
                     writer.WriteLine($"//{command}");
                     writer.WriteLine("@SP");
-                    writer.WriteLine("M=M-1"); //next sp
+                    writer.WriteLine("M=M-1");
                     writer.WriteLine("A=M-1");
                     writer.WriteLine("D=M");
                     writer.WriteLine("A=A+1");
@@ -366,7 +366,7 @@ namespace VmTranslator
                 case "or":
                     writer.WriteLine($"//{command}");
                     writer.WriteLine("@SP");
-                    writer.WriteLine("M=M-1"); //next sp
+                    writer.WriteLine("M=M-1"); 
                     writer.WriteLine("A=M-1");
                     writer.WriteLine("D=M");
                     writer.WriteLine("A=A+1");
@@ -425,14 +425,6 @@ namespace VmTranslator
 
         public void WriteGoTo(string dest)
         {
-            /*if (functionLabels.ContainsKey(dest))
-            {
-                dest = functionLabels[dest];
-                writer.WriteLine($"//goto {dest}");
-                writer.WriteLine($"@{dest}");
-                writer.WriteLine($"0;JMP");
-                return;
-            }*/
             writer.WriteLine($"//goto {dest}");
             writer.WriteLine($"@{_funcName}${dest}");
             writer.WriteLine($"0;JMP");
@@ -451,6 +443,9 @@ namespace VmTranslator
             writer.WriteLine("M=M-1");
             writer.WriteLine("A=M");
             writer.WriteLine("D=M");
+
+            if(_funcName=="$") _funcName = "";
+
             writer.WriteLine($"@{_funcName}${label}");
             writer.WriteLine("D;JLT");
             writer.WriteLine("D;JGT");
@@ -482,6 +477,7 @@ namespace VmTranslator
             writer.WriteLine($"       @WHILE_LOOP:{_tempCount}");
             writer.WriteLine("        0;JMP");
             writer.WriteLine($"(END_LOOP:{_tempCount++})");
+
         }
 
         public void WriteCall(string funcName,int nArgs)
@@ -489,7 +485,6 @@ namespace VmTranslator
             writer.WriteLine($"//call {funcName}");
             string returnAddr = $"{_funcName}$ret.{_retAddrCount++}";
             writer.WriteLine($"@{returnAddr}");
-            //writer.WriteLine("A=M");
             writer.WriteLine("D=A");
             writer.WriteLine("@SP");
             writer.WriteLine("A=M");
@@ -498,7 +493,7 @@ namespace VmTranslator
             writer.WriteLine("M=M+1");
 
             writer.WriteLine("@LCL");
-            //writer.WriteLine("A=M");
+
             writer.WriteLine("D=M");
             writer.WriteLine("@SP");
             writer.WriteLine("A=M");
@@ -507,7 +502,6 @@ namespace VmTranslator
             writer.WriteLine("M=M+1");
 
             writer.WriteLine("@ARG");
-            //writer.WriteLine("A=M");
             writer.WriteLine("D=M");
             writer.WriteLine("@SP");
             writer.WriteLine("A=M");
@@ -516,7 +510,6 @@ namespace VmTranslator
             writer.WriteLine("M=M+1");
 
             writer.WriteLine("@THIS");
-            //writer.WriteLine("A=M");
             writer.WriteLine("D=M");
             writer.WriteLine("@SP");
             writer.WriteLine("A=M");
@@ -525,7 +518,6 @@ namespace VmTranslator
             writer.WriteLine("M=M+1");
 
             writer.WriteLine("@THAT");
-            //writer.WriteLine("A=M");
             writer.WriteLine("D=M");
             writer.WriteLine("@SP");
             writer.WriteLine("A=M");
@@ -619,24 +611,26 @@ namespace VmTranslator
 
         public void Merge(string directoryName)
         {
-            string asmFinal = directoryName+"\\"+directoryName+".asm";
+            string asmFinal = directoryName+"/"+directoryName+".asm";
             Console.WriteLine("asmFile "+asmFinal);
             StreamWriter streamWriter = new StreamWriter(asmFinal, false);
-            string sysFile =Directory.GetFiles(directoryName,"*Sys.asm").First();
-            //sysFile = sysFile.Replace(directoryName+"\\", "");
+            string sysFile =Directory.GetFiles(directoryName,"*Sys.asm").FirstOrDefault();
             Console.WriteLine("Sys file "+sysFile);
             StreamReader streamReader;
-            
-            streamReader = new StreamReader(sysFile);
             string line;
-            while (!streamReader.EndOfStream)
+            if (sysFile!=null)
             {
+                streamReader = new StreamReader(sysFile);
                 
-                line = streamReader.ReadLine();
-                streamWriter.WriteLine(line);
+                while (!streamReader.EndOfStream)
+                {
+
+                    line = streamReader.ReadLine();
+                    if (!String.IsNullOrEmpty(line)) streamWriter.WriteLine(line);
+                }
+                //streamWriter.WriteLine();
+                streamReader.Close();
             }
-            streamWriter.WriteLine();
-            streamReader.Close();
             foreach(string file in Directory.GetFiles(directoryName, "*.asm"))
             {
                 Console.WriteLine("reading asms: "+file);
@@ -645,9 +639,9 @@ namespace VmTranslator
                 while (!streamReader.EndOfStream)
                 {
                     line = streamReader.ReadLine();
-                    streamWriter.WriteLine(line);
+                    if (!String.IsNullOrEmpty(line)) streamWriter.WriteLine(line);
                 }
-                streamWriter.WriteLine();
+                //streamWriter.WriteLine();
                 streamReader.Close();
             }
             streamWriter.Close();

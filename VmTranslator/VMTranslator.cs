@@ -3,9 +3,9 @@ using System.IO;
 
 namespace VmTranslator
 {
-    class Program
+    public class VMTranslator
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Starting Program");
 
@@ -14,7 +14,6 @@ namespace VmTranslator
             CodeGenerator codeGenerator = new CodeGenerator();
             string outputFile;
             if (Directory.Exists(sourcefile)){
-                Console.WriteLine("A Dir");
                 foreach (string file in Directory.GetFiles(sourcefile,"*.vm"))
                 {
                     Console.WriteLine(file);

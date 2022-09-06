@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
-    <StartupObject>VmTranslator.Program</StartupObject>
+    <StartupObject>VmTranslator.VMTranslator</StartupObject>
   </PropertyGroup>
 
 </Project>

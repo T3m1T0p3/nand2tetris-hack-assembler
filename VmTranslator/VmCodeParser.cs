@@ -43,11 +43,6 @@ namespace VmTranslator
 
         }
 
-        public string Parser(string command)
-        {
-            throw new Exception();
-        }
-
         public bool HasMoreCommand()
         {
             return _reader.EndOfStream;
