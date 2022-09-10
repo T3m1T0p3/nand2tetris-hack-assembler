@@ -3,3 +3,10 @@ C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\pub
 C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.deps.json
 C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.runtimeconfig.json
 C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\JackCompiler.pdb
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\DotNetty.Common.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\Microsoft.Extensions.Logging.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\Microsoft.Extensions.Options.dll
+C:\Users\Oyinlola\source\repos\HackAssembler\JackCompiler\bin\Release\net5.0\publish\Microsoft.Extensions.Primitives.dll

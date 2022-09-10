@@ -1,9 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "syhSP55OdyfoMtu15D37s3zz5AGQPnx3MhWseaRLkKIEsd2DVKmc3Uev1doK1GNDzs/2DGgW383R714gnmtTkQ==",
+  "dgSpecHash": "PS7dFKy6AgKm/LywESuOKPQp/YZ5ozXukyLMxQZUMq46y0JRafbQ8uUOVsNOkVMC2uIrEpTgYdDOuN9qriT5Rg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Oyinlola\\source\\repos\\HackAssembler\\JackCompiler\\JackCompiler.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\dotnetty.common\\0.7.4\\dotnetty.common.0.7.4.nupkg.sha512",
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.0\\microsoft.extensions.dependencyinjection.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.extensions.logging\\5.0.0\\microsoft.extensions.logging.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.extensions.options\\5.0.0\\microsoft.extensions.options.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\Oyinlola\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
     "C:\\Users\\Oyinlola\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
   ],
   "logs": []

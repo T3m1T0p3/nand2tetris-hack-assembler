@@ -8,7 +8,7 @@ namespace JackCompiler
 {
     public class JackAnalyzer
     {
-        public static void Main(string[] args)
+       /* public static void Main(string[] args)
         {
             string path = args[0];
             CompilationEngine engine;
@@ -21,6 +21,6 @@ namespace JackCompiler
                 return;
             }
             engine = new CompilationEngine(path);
-        }
+        }*/
     }
 }

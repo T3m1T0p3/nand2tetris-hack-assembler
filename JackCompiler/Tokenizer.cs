@@ -63,10 +63,8 @@ namespace JackCompiler
         {
             string temp = "";
             char currChar = enumerator.Current;
-            Console.WriteLine(1);
             if(currChar==' ')
             {
-                Console.WriteLine(2);
                 while (currChar==' ')
                 {
                     Console.WriteLine("processing empty char");
@@ -80,19 +78,15 @@ namespace JackCompiler
             //prcess string const
             if (currChar == '\"')
             {
-                Console.WriteLine(3);
                 if (!enumerator.MoveNext()) ProcessLine();
                 currChar = enumerator.Current;
                 while (currChar != '\"')
                 {
-                    Console.WriteLine(4);
                     temp += currChar.ToString();
                     if(!enumerator.MoveNext()) ProcessLine();
                     currChar = enumerator.Current;
                 }
-                Console.WriteLine(5);
                 if (!enumerator.MoveNext()) ProcessLine();
-                Console.WriteLine(6);
                 _currentToken = temp;
                 _stringConst = true;
                 //Console.WriteLine($"strng cnst: {_currentToken}");
@@ -102,35 +96,28 @@ namespace JackCompiler
             else if (symbols.Contains(currChar))
             {
                 //Console.WriteLine($"hit symbol processor");
-                Console.WriteLine(7);
                 _currentToken = currChar.ToString();
                 Console.WriteLine("possibly last char:" + _currentToken);
                 if(!enumerator.MoveNext()) ProcessLine();
-                Console.WriteLine(8);
                 return;
             }
 
             else
             {
-                Console.WriteLine(9);
                 //Console.WriteLine($"hit identifier processor");
                 while (!symbols.Contains(currChar) && currChar != ' ')
                 {
-                    Console.WriteLine(10);
                     temp += currChar.ToString();
                     if (!enumerator.MoveNext()) ProcessLine();
-                    Console.WriteLine(11);
                     currChar = enumerator.Current;
                 }
 
                 if (currChar == ' ')
                 {
-                    Console.WriteLine(12);
                     if (!enumerator.MoveNext()) ProcessLine();
                     Console.WriteLine(13);
                 }
                 _currentToken = temp;
-                Console.WriteLine(14);
                 //Console.WriteLine($"identifier: {_currentToken}");
                 return;
             }
